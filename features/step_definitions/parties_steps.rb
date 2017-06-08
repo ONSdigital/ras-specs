@@ -1,3 +1,6 @@
+require 'securerandom'
+
+
 Given(/^the party service is available$/) do
   # TODO: decide how to implement this (which endpoint to hit?)
   true
@@ -15,14 +18,20 @@ Then(/^I should get response status code (\d+)$/) do |expected_status|
   expect(@response.code).to eq expected_status.to_i
 end
 
-When(/^I post a business with party_id '(.+)'$/) do |party_id|
+When(/^I create a business with party_id '(.+)'$/) do |party_id|
   # TODO: parameterise reference
   reference = '49900001000'
   json = make_business(party_id, reference)
   @response = post_business json
 end
 
-When(/^I post a respondent with party_id '(.+)'$/) do |party_id|
+When(/^I create a respondent with party_id '(.+)'$/) do |party_id|
+  json = make_respondent(party_id)
+  @response = post_respondent json
+end
+
+When(/^I create a respondent with party_id <generated>$/) do
+  party_id = SecureRandom.uuid
   json = make_respondent(party_id)
   @response = post_respondent json
 end
