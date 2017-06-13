@@ -35,3 +35,29 @@ When(/^I create a respondent with party_id <generated>$/) do
   json = make_respondent(party_id)
   @response = post_respondent json
 end
+
+def lookup(h, k)
+  key = k.split('.')
+  key_part = key.shift
+  val = h
+  while key_part
+    val = val[key_part]
+    key_part = key.shift
+  end
+  val
+end
+
+Then(/^the response body contains the following properties:$/) do |table|
+
+  response_body = JSON.parse(@response.body)
+  expected_data = table.hashes
+  expected_data.each do |item|
+    expected_key = item['name']
+    actual_value = lookup(response_body, expected_key)
+    expect(actual_value).not_to be_nil, "'#{expected_key}' doesn't exist in response"
+
+    expected_value = item['value']
+    expect(actual_value).to eq expected_value
+
+  end
+end

@@ -7,23 +7,31 @@ def parties_root
 end
 
 def get_business(party_id)
-  HTTParty.get("#{parties_root}/businesses/id/#{party_id}")
+  resp = HTTParty.get("#{parties_root}/businesses/id/#{party_id}")
+  $log.info(resp)
+  resp
 end
 
 def get_respondent(party_id)
-  HTTParty.get("#{parties_root}/respondents/id/#{party_id}")
+  resp = HTTParty.get("#{parties_root}/respondents/id/#{party_id}")
+  $log.info(resp)
+  resp
 end
 
 def post_business(body)
-  HTTParty.post("#{parties_root}/businesses",
+  resp = HTTParty.post("#{parties_root}/businesses",
                 :body => body,
                 :headers => { 'Content-Type'.freeze => 'application/json' } )
+  $log.info(resp)
+  resp
 end
 
 def post_respondent(body)
-  HTTParty.post("#{parties_root}/respondents",
+  resp = HTTParty.post("#{parties_root}/respondents",
                 :body => body,
                 :headers => { 'Content-Type'.freeze => 'application/json' } )
+  $log.info(resp)
+  resp
 end
 
 def make_business(party_id, reference)
