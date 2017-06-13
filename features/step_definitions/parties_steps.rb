@@ -21,33 +21,40 @@ end
 When(/^I create a business with party_id '(.+)'$/) do |party_id|
   # TODO: parameterise reference
   reference = '49900001000'
-  json = make_business(party_id, reference)
+  json = make_business_with_uuid(party_id, reference)
+  @response = post_business json
+end
+
+When(/^I create a business party$/) do
+  reference = '49900001000'
+  json = make_business(reference)
+  @response = post_business json
+end
+
+Given(/^there is a business with party_id '(.+)'$/) do |party_id|
+  # TODO: parameterise reference
+  reference = '49900001000'
+  json = make_business_with_uuid(party_id, reference)
   @response = post_business json
 end
 
 When(/^I create a respondent with party_id '(.+)'$/) do |party_id|
-  json = make_respondent(party_id)
+  json = make_respondent_with_uuid(party_id)
   @response = post_respondent json
 end
 
-When(/^I create a respondent with party_id <generated>$/) do
+When(/^I create a respondent party$/) do
+  json = make_respondent()
+  @response = post_respondent json
+end
+
+Given(/^there is a respondent with party_id '(.+)'$/) do |party_id|
   party_id = SecureRandom.uuid
-  json = make_respondent(party_id)
+  json = make_respondent_with_uuid(party_id)
   @response = post_respondent json
 end
 
-def lookup(h, k)
-  key = k.split('.')
-  key_part = key.shift
-  val = h
-  while key_part
-    val = val[key_part]
-    key_part = key.shift
-  end
-  val
-end
-
-Then(/^the response body contains the following properties:$/) do |table|
+Then(/^the response body should contain the following properties:$/) do |table|
 
   response_body = JSON.parse(@response.body)
   expected_data = table.hashes
@@ -57,7 +64,7 @@ Then(/^the response body contains the following properties:$/) do |table|
     expect(actual_value).not_to be_nil, "'#{expected_key}' doesn't exist in response"
 
     expected_value = item['value']
-    expect(actual_value).to eq expected_value
+    expect(actual_value).to should_equal expected_value
 
   end
 end

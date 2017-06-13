@@ -1,5 +1,6 @@
 require 'httparty'
 
+
 def parties_root
   host = $env['host']
   port = $env['port']
@@ -34,12 +35,33 @@ def post_respondent(body)
   resp
 end
 
-def make_business(party_id, reference)
+def make_business_with_uuid(party_id, reference)
+  template = File.read('./templates/business-with-uuid.json.erb')
+  ERB.new(template).result(binding)
+end
+
+def make_business(reference)
   template = File.read('./templates/business.json.erb')
   ERB.new(template).result(binding)
 end
 
-def make_respondent(party_id)
+def make_respondent_with_uuid(party_id)
+  template = File.read('./templates/respondent-with-uuid.json.erb')
+  ERB.new(template).result(binding)
+end
+
+def make_respondent()
   template = File.read('./templates/respondent.json.erb')
   ERB.new(template).result(binding)
+end
+
+def lookup(h, k)
+  key = k.split('.')
+  key_part = key.shift
+  val = h
+  while key_part
+    val = val[key_part]
+    key_part = key.shift
+  end
+  val
 end

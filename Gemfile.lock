@@ -18,6 +18,8 @@ GEM
     httparty (0.15.5)
       multi_xml (>= 0.5.2)
     inifile (3.0.0)
+    macaddr (1.7.1)
+      systemu (~> 2.6.2)
     multi_json (1.12.1)
     multi_test (0.1.2)
     multi_xml (0.6.0)
@@ -34,6 +36,9 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.6.0)
     rspec-support (3.6.0)
+    systemu (2.6.5)
+    uuid (2.3.8)
+      macaddr (~> 1.0)
 
 PLATFORMS
   ruby
@@ -43,6 +48,7 @@ DEPENDENCIES
   httparty
   inifile
   rspec
+  uuid
 
 BUNDLED WITH
    1.15.1
