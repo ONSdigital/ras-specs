@@ -4,7 +4,7 @@ require 'httparty'
 def parties_root
   host = $env['host']
   port = $env['port']
-  "http://#{host}:#{port}/party-api/1.0.0"
+  "http://#{host}:#{port}/party-api/v1"
 end
 
 def get_business(party_id)
