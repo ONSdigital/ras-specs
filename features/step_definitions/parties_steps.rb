@@ -63,7 +63,7 @@ Then(/^the response body should contain the following properties:$/) do |table|
     actual_value = lookup(response_body, expected_key)
     expect(actual_value).not_to be_nil, "'#{expected_key}' doesn't exist in response"
 
-    expected_value = item['value']
+    expected_value = cast(item['value'], item['type'])
     expect(actual_value).to should_equal expected_value
 
   end

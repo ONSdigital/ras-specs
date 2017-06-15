@@ -4,34 +4,44 @@ require 'httparty'
 def parties_root
   host = $env['host']
   port = $env['port']
-  "http://#{host}:#{port}/party-api/1.0.4"
+  "http://#{host}:#{port}/party-api/1.0.0"
 end
 
 def get_business(party_id)
-  resp = HTTParty.get("#{parties_root}/businesses/id/#{party_id}")
-  $log.info(resp)
+  url = "#{parties_root}/businesses/id/#{party_id}"
+  $log.info("GET #{url}")
+  resp = HTTParty.get(url)
+  $log.info(resp.parsed_response)
   resp
 end
 
 def get_respondent(party_id)
-  resp = HTTParty.get("#{parties_root}/respondents/id/#{party_id}")
-  $log.info(resp)
+  url = "#{parties_root}/respondents/id/#{party_id}"
+  $log.info("GET #{url}")
+  resp = HTTParty.get(url)
+  $log.info(resp.parsed_response)
   resp
 end
 
 def post_business(body)
-  resp = HTTParty.post("#{parties_root}/businesses",
+  url = "#{parties_root}/businesses"
+  $log.info("POST #{url}")
+  $log.debug(body)
+  resp = HTTParty.post(url,
                 :body => body,
                 :headers => { 'Content-Type'.freeze => 'application/json' } )
-  $log.info(resp)
+  $log.info(resp.parsed_response)
   resp
 end
 
 def post_respondent(body)
-  resp = HTTParty.post("#{parties_root}/respondents",
+  url = "#{parties_root}/respondents"
+  $log.info("POST #{url}")
+  $log.debug(body)
+  resp = HTTParty.post(url,
                 :body => body,
                 :headers => { 'Content-Type'.freeze => 'application/json' } )
-  $log.info(resp)
+  $log.info(resp.parsed_response)
   resp
 end
 
@@ -64,4 +74,8 @@ def lookup(h, k)
     key_part = key.shift
   end
   val
+end
+
+def cast(v, t)
+  t == 'int' ? v.to_i : v
 end
