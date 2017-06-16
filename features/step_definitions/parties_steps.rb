@@ -1,4 +1,11 @@
+require 'json'
 require 'securerandom'
+
+
+def business_ref
+  ref = rand(99999999999)
+  ref.to_s
+end
 
 
 Given(/^the party service is available$/) do
@@ -19,23 +26,38 @@ Then(/^I should get response status code (\d+)$/) do |expected_status|
 end
 
 When(/^I create a business with party_id '(.+)'$/) do |party_id|
-  # TODO: parameterise reference
-  reference = '49900001000'
-  json = make_business_with_uuid(party_id, reference)
+  json = make_business_with_uuid(party_id, business_ref)
   @response = post_business json
 end
 
 When(/^I create a business party$/) do
-  reference = '49900001000'
-  json = make_business(reference)
+  json = make_business(business_ref)
   @response = post_business json
+  @business_id = @response.parsed_response['id']
+end
+
+When(/^I create a business party with attributes:$/) do |table|
+  business = {
+      'businessRef'.freeze => business_ref,
+      'attributes'.freeze => {
+
+      }
+  }
+
+  attribute_data = table.hashes
+  attribute_data.each do |item|
+    business['attributes'][item['name']] = cast(item['value'], item['type'])
+  end
+
+  @response = post_business business.to_json
+  @business_id = @response.parsed_response['id']
 end
 
 Given(/^there is a business with party_id '(.+)'$/) do |party_id|
   # TODO: parameterise reference
-  reference = '49900001000'
-  json = make_business_with_uuid(party_id, reference)
+  json = make_business_with_uuid(party_id, business_ref)
   @response = post_business json
+  @business_id = @response.parsed_response['id']
 end
 
 When(/^I create a respondent with party_id '(.+)'$/) do |party_id|
@@ -44,9 +66,10 @@ When(/^I create a respondent with party_id '(.+)'$/) do |party_id|
 end
 
 When(/^I create a respondent party$/) do
-  json = make_respondent()
+  json = make_respondent
   @response = post_respondent json
 end
+
 
 Given(/^there is a respondent with party_id '(.+)'$/) do |party_id|
   party_id = SecureRandom.uuid
@@ -67,4 +90,11 @@ Then(/^the response body should contain the following properties:$/) do |table|
     expect(actual_value).to should_equal expected_value
 
   end
+end
+
+
+When(/^I get the business party$/) do
+  party_id = @business_id
+  print "**** Getting business with id #{party_id}"
+  @response = get_business party_id
 end

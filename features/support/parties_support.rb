@@ -30,7 +30,7 @@ def post_business(body)
   resp = HTTParty.post(url,
                 :body => body,
                 :headers => { 'Content-Type'.freeze => 'application/json' } )
-  $log.info(resp.parsed_response)
+  $log.info("POST response: #{resp.parsed_response}")
   resp
 end
 
@@ -70,7 +70,11 @@ def lookup(h, k)
   key_part = key.shift
   val = h
   while key_part
-    val = val[key_part]
+    begin
+      val = val[key_part]
+    rescue
+      return nil
+    end
     key_part = key.shift
   end
   val
