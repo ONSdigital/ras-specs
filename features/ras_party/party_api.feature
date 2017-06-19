@@ -1,4 +1,4 @@
-@parties
+@party @api
 Feature: Create new parties
   As a client of RAS Party
   I want to create a new party resource
@@ -9,13 +9,13 @@ Feature: Create new parties
     Given the party service is available
     When I get a business with party_id '31317c23-763d-46a9-b4e5-c37ff5b4fbe7'
     Then I should get response status code 404
-@jon
+
   Scenario: Create a new business party
     When I create a business with party_id '3b136c4b-7a14-4904-9e01-13364dd7b972'
     Then I should get response status code 200
     And the response body should contain the following properties:
       | name           | value                                | type   |
-      | businessRef    | <int>                          | string |
+      | businessRef    | <int>                                | string |
       | contactName    | John Doe                             | string |
       | employeeCount  | 50                                   | int    |
       | enterpriseName | ABC Limited                          | string |
@@ -124,17 +124,17 @@ Feature: Create new parties
 
   Scenario: Attribute validation
     When I create a business party with attributes:
-      | name           | value                   | type   |
-      | employeeCount  | 50                      | int    |
-      | enterpriseName | ABC Limited             | string |
-      | facsimile      | +44 1234 567890         | string |
-      | fulltimeCount  | 35                      | int    |
-      | name           | Bolts and Ratchets Ltd  | string |
-      | sic2003        | 2520                    | string |
-      | sic2007        | 2520                    | string |
-      | telephone      | +44 1234 567890         | string |
-      | tradingName    | ABC Trading Ltd         | string |
-      | turnover       | 350                     | int    |
+      | name           | value                  | type   |
+      | employeeCount  | 50                     | int    |
+      | enterpriseName | ABC Limited            | string |
+      | facsimile      | +44 1234 567890        | string |
+      | fulltimeCount  | 35                     | int    |
+      | name           | Bolts and Ratchets Ltd | string |
+      | sic2003        | 2520                   | string |
+      | sic2007        | 2520                   | string |
+      | telephone      | +44 1234 567890        | string |
+      | tradingName    | ABC Trading Ltd        | string |
+      | turnover       | 350                    | int    |
     Then I should get response status code 400
     # TODO: check the response message
 

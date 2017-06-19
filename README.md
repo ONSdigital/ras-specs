@@ -16,6 +16,6 @@ Once 1 and 2 are configured, then do `bundle install` to setup the ras-specs dep
 Run cucumber from the command-line, passing in the environment to run against and (optionally) any 'tags' to restrict which tests get executed. E.g:
 
 ``` Shell
-cucumber ONS_ENV=dev --tags @parties
+cucumber ONS_ENV=dev --tags @party
 ```
 Which will execute all tests tagged with 'parties' against the dev environment.
