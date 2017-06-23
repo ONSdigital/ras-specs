@@ -39,6 +39,18 @@ end
 When(/^I create a business party with attributes:$/) do |table|
   business = {
       'businessRef'.freeze => business_ref,
+      'contactName'.freeze => 'John Doe',
+      'employeeCount'.freeze => 50,
+      'enterpriseName'.freeze => 'ABC Limited',
+      'facsimile'.freeze => '+44 1234 567890',
+      'fulltimeCount'.freeze => 35,
+      'legalStatus'.freeze => 'Private Limited Company',
+      'name'.freeze => 'Bolts and Ratchets Ltd',
+      'sic2003'.freeze => '2520',
+      'sic2007'.freeze => '2520',
+      'telephone'.freeze => '+44 1234 567890',
+      'tradingName'.freeze => 'ABC Trading Ltd',
+      'turnover'.freeze => 350,
       'attributes'.freeze => {
 
       }
@@ -72,7 +84,7 @@ end
 
 
 Given(/^there is a respondent with party_id '(.+)'$/) do |party_id|
-  party_id = SecureRandom.uuid
+  # party_id = SecureRandom.uuid
   json = make_respondent_with_uuid(party_id)
   @response = post_respondent json
 end
@@ -95,6 +107,5 @@ end
 
 When(/^I get the business party$/) do
   party_id = @business_id
-  print "**** Getting business with id #{party_id}"
   @response = get_business party_id
 end

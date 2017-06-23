@@ -10,6 +10,7 @@ Feature: Create new parties
     When I get a business with party_id '31317c23-763d-46a9-b4e5-c37ff5b4fbe7'
     Then I should get response status code 404
 
+  @nonidempotent
   Scenario: Create a new business party
     When I create a business with party_id '3b136c4b-7a14-4904-9e01-13364dd7b972'
     Then I should get response status code 200
@@ -31,6 +32,7 @@ Feature: Create new parties
       | id             | 3b136c4b-7a14-4904-9e01-13364dd7b972 | string |
       | sampleUnitType | B                                    | string |
 
+  @nonidempotent
   Scenario: Create a new respondent party
     When I create a respondent with party_id 'df64f155-af96-42e0-aab9-30118b7dd1f5'
     Then I should get response status code 200
@@ -65,7 +67,7 @@ Feature: Create new parties
       | id             | 3b136c4b-7a14-4904-9e01-13364dd7b972 | string |
       | sampleUnitType | B                                    | string |
 
-
+  @jon
   Scenario: Get an existing respondent party
     Given there is a respondent with party_id 'df64f155-af96-42e0-aab9-30118b7dd1f5'
     When I get a respondent with party_id 'df64f155-af96-42e0-aab9-30118b7dd1f5'
@@ -121,7 +123,7 @@ Feature: Create new parties
       | lastName       | Turner               | string |
       | sampleUnitType | BI                   | string |
       | telephone      | +44 1234 567890      | string |
-
+@pending
   Scenario: Attribute validation
     When I create a business party with attributes:
       | name           | value                  | type   |
@@ -141,18 +143,6 @@ Feature: Create new parties
   Scenario: Store and retrieve BRES attributes
     When I create a business party with attributes:
       | name           | value                   | type   |
-      | employeeCount  | 50                      | int    |
-      | contactName    | John Doe                | string |
-      | enterpriseName | ABC Limited             | string |
-      | facsimile      | +44 1234 567890         | string |
-      | fulltimeCount  | 35                      | int    |
-      | legalStatus    | Private Limited Company | string |
-      | name           | Bolts and Ratchets Ltd  | string |
-      | sic2003        | 2520                    | string |
-      | sic2007        | 2520                    | string |
-      | telephone      | +44 1234 567890         | string |
-      | tradingName    | ABC Trading Ltd         | string |
-      | turnover       | 350                     | int    |
       | checkletter    | abcd                    | string |
       | frosic92       | abc                     | string |
       | rusic92        | abc                     | string |
