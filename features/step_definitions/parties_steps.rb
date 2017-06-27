@@ -25,8 +25,13 @@ Then(/^I should get response status code (\d+)$/) do |expected_status|
   expect(@response.code).to eq expected_status.to_i
 end
 
-When(/^I create a business with party_id '(.+)'$/) do |party_id|
+When(/^I create a business with party_id '([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'$/) do |party_id|
   json = make_business_with_uuid(party_id, business_ref)
+  @response = post_business json
+end
+
+When(/^I create a business with party_id '([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})' and business_ref '(\d+)'$/) do |party_id, ref|
+  json = make_business_with_uuid(party_id, ref)
   @response = post_business json
 end
 
@@ -72,7 +77,7 @@ Given(/^there is a business with party_id '(.+)'$/) do |party_id|
   @business_id = @response.parsed_response['id']
 end
 
-When(/^I create a respondent with party_id '(.+)'$/) do |party_id|
+When(/^I create a respondent with party_id '([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'$/) do |party_id|
   json = make_respondent_with_uuid(party_id)
   @response = post_respondent json
 end

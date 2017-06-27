@@ -10,13 +10,13 @@ Feature: Create new parties
     When I get a business with party_id '31317c23-763d-46a9-b4e5-c37ff5b4fbe7'
     Then I should get response status code 404
 
-  @nonidempotent
+  @nonidempotent @demo
   Scenario: Create a new business party
-    When I create a business with party_id '3b136c4b-7a14-4904-9e01-13364dd7b972'
+    When I create a business with party_id '3b136c4b-7a14-4904-9e01-13364dd7b972' and business_ref '0123456789'
     Then I should get response status code 200
     And the response body should contain the following properties:
       | name           | value                                | type   |
-      | businessRef    | <int>                                | string |
+      | businessRef    | 0123456789                           | string |
       | contactName    | John Doe                             | string |
       | employeeCount  | 50                                   | int    |
       | enterpriseName | ABC Limited                          | string |
@@ -32,14 +32,14 @@ Feature: Create new parties
       | id             | 3b136c4b-7a14-4904-9e01-13364dd7b972 | string |
       | sampleUnitType | B                                    | string |
 
-  @nonidempotent
+  @nonidempotent @demo
   Scenario: Create a new respondent party
-    When I create a respondent with party_id 'df64f155-af96-42e0-aab9-30118b7dd1f5'
+    When I create a respondent with party_id '3b136c4b-7a14-4904-9e01-13364dd7b972'
     Then I should get response status code 200
     And the response body should contain the following properties:
       | name           | value                                | type   |
-      | id             | df64f155-af96-42e0-aab9-30118b7dd1f5 | string |
-      | emailAddress   | john.doe@abc-ltd.com                 | string |
+      | id             | 3b136c4b-7a14-4904-9e01-13364dd7b972 | string |
+      | emailAddress   | Jacky.Turner@abc-ltd.com             | string |
       | firstName      | Jacky                                | string |
       | lastName       | Turner                               | string |
       | sampleUnitType | BI                                   | string |
@@ -67,7 +67,6 @@ Feature: Create new parties
       | id             | 3b136c4b-7a14-4904-9e01-13364dd7b972 | string |
       | sampleUnitType | B                                    | string |
 
-  @jon
   Scenario: Get an existing respondent party
     Given there is a respondent with party_id 'df64f155-af96-42e0-aab9-30118b7dd1f5'
     When I get a respondent with party_id 'df64f155-af96-42e0-aab9-30118b7dd1f5'
