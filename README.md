@@ -19,3 +19,10 @@ Run cucumber from the command-line, passing in the environment to run against an
 cucumber ONS_ENV=dev --tags @party
 ```
 Which will execute all tests tagged with 'parties' against the dev environment.
+
+To generate the current test data, please use;
+```
+cucumber ONS_ENV=local --tags @demo
+```
+Or substitute your CF environment in place of local.
+
