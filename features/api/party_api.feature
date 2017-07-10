@@ -45,6 +45,19 @@ Feature: Create new parties
       | sampleUnitType | BI                                   | string |
       | telephone      | +44 1234 567890                      | string |
 
+  @nonidempotent @demo
+  Scenario: Create a new respondent party
+    When I create a respondent with party_id 'db036fd7-ce17-40c2-a8fc-932e7c228397'
+    Then I should get response status code 200
+    And the response body should contain the following properties:
+      | name           | value                                | type   |
+      | id             | db036fd7-ce17-40c2-a8fc-932e7c228397 | string |
+      | emailAddress   | Jacky.Turner@abc-ltd.com             | string |
+      | firstName      | Jacky                                | string |
+      | lastName       | Turner                               | string |
+      | sampleUnitType | BI                                   | string |
+      | telephone      | +44 1234 567890                      | string |
+
   Scenario: Get an existing business party
     Given there is a business with party_id '3b136c4b-7a14-4904-9e01-13364dd7b972'
     When I get a business with party_id '3b136c4b-7a14-4904-9e01-13364dd7b972'
@@ -74,7 +87,7 @@ Feature: Create new parties
     And the response body should contain the following properties:
       | name           | value                                | type   |
       | id             | df64f155-af96-42e0-aab9-30118b7dd1f5 | string |
-      | emailAddress   | john.doe@abc-ltd.com                 | string |
+      | emailAddress   | Jacky.Turner@abc-ltd.com              | string |
       | firstName      | Jacky                                | string |
       | lastName       | Turner                               | string |
       | sampleUnitType | BI                                   | string |
@@ -85,6 +98,8 @@ Feature: Create new parties
     When I get a business with party_id 'df64f155-af96-42e0-aab9-30118b7dd1f5'
     Then I should get response status code 404
 
+@pending
+  # It's currently possible for an id to be duplicated across business and party
   Scenario: Try to get a respondent party with the id of a business party
     Given there is a business with party_id '3b136c4b-7a14-4904-9e01-13364dd7b972'
     When I get a respondent with party_id '3b136c4b-7a14-4904-9e01-13364dd7b972'
@@ -117,27 +132,11 @@ Feature: Create new parties
     And the response body should contain the following properties:
       | name           | value                | type   |
       | id             | <uuid>               | string |
-      | emailAddress   | john.doe@abc-ltd.com | string |
+      | emailAddress   | Jacky.Turner@abc-ltd.com | string |
       | firstName      | Jacky                | string |
       | lastName       | Turner               | string |
       | sampleUnitType | BI                   | string |
       | telephone      | +44 1234 567890      | string |
-@pending
-  Scenario: Attribute validation
-    When I create a business party with attributes:
-      | name           | value                  | type   |
-      | employeeCount  | 50                     | int    |
-      | enterpriseName | ABC Limited            | string |
-      | facsimile      | +44 1234 567890        | string |
-      | fulltimeCount  | 35                     | int    |
-      | name           | Bolts and Ratchets Ltd | string |
-      | sic2003        | 2520                   | string |
-      | sic2007        | 2520                   | string |
-      | telephone      | +44 1234 567890        | string |
-      | tradingName    | ABC Trading Ltd        | string |
-      | turnover       | 350                    | int    |
-    Then I should get response status code 400
-    # TODO: check the response message
 
   Scenario: Store and retrieve BRES attributes
     When I create a business party with attributes:
