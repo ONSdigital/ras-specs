@@ -16,7 +16,7 @@ Feature: Create new parties
     Then I should get response status code 200
     And the response body should contain the following properties:
       | name           | value                                | type   |
-      | businessRef    | 0123456789                           | string |
+      | businessRef    | 49900000000                          | string |
       | contactName    | John Doe                             | string |
       | employeeCount  | 50                                   | int    |
       | enterpriseName | ABC Limited                          | string |
@@ -34,11 +34,11 @@ Feature: Create new parties
 
   @nonidempotent @demo
   Scenario: Create a new respondent party
-    When I create a respondent with party_id '3b136c4b-7a14-4904-9e01-13364dd7b972'
+    When I create a respondent with party_id '3b136c4b-7a14-4904-9e01-13364dd7b973'
     Then I should get response status code 200
     And the response body should contain the following properties:
       | name           | value                                | type   |
-      | id             | 3b136c4b-7a14-4904-9e01-13364dd7b972 | string |
+      | id             | 3b136c4b-7a14-4904-9e01-13364dd7b973 | string |
       | emailAddress   | Jacky.Turner@abc-ltd.com             | string |
       | firstName      | Jacky                                | string |
       | lastName       | Turner                               | string |
