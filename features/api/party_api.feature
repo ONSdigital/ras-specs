@@ -98,8 +98,8 @@ Feature: Create new parties
     When I get a business with party_id 'df64f155-af96-42e0-aab9-30118b7dd1f5'
     Then I should get response status code 404
 
+# It's currently possible for an id to be duplicated across business and party
 @pending
-  # It's currently possible for an id to be duplicated across business and party
   Scenario: Try to get a respondent party with the id of a business party
     Given there is a business with party_id '3b136c4b-7a14-4904-9e01-13364dd7b972'
     When I get a respondent with party_id '3b136c4b-7a14-4904-9e01-13364dd7b972'

@@ -11,6 +11,22 @@ Contains BDD-style executable specifications for RAS services. The tests rely on
 
 Once 1 and 2 are configured, then do `bundle install` to setup the ras-specs dependencies.
 
+## Linux Setup
+
+1. Install cucumber onTO your system
+
+	/> sudo apt install cucumber
+
+2. Install GEM bundler onto your system
+
+	/> sudo gem install bundler
+
+3. Now setup the 'bundler' system
+
+	/> bundle install
+
+
+
 ## Running
 
 Run cucumber from the command-line, passing in the environment to run against and (optionally) any 'tags' to restrict which tests get executed. E.g:
